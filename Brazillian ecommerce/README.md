@@ -9,8 +9,8 @@ The pipeline ingests data from GitHub and Azure SQL, performs transformations an
 ## Architecture Flow
 ![ETL Architecture Flow](https://github.com/bhavi40/DataEngineering/blob/main/Brazillian%20ecommerce/Architecture%20Diagram.png)
 
-## ⚙️ Features
-- **Extract** raw order and customer datasets from CSV/Parquet sources.  
+## Workflow Steps
+- Created the following Azure resources within a Resource Group:
 - **Transform** data using PySpark:
   - Clean and standardize input records.
   - Join order and customer datasets.  
