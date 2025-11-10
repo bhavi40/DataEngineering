@@ -7,7 +7,7 @@ The pipeline ingests data from GitHub and Azure SQL, performs transformations an
 ---
 
 ## Architecture Flow
-![ETL Architecture Flow](architecture_flow.png)
+![ETL Architecture Flow](Brazillian ecommerce/Architecture Diagram.png)
 
 ## ⚙️ Features
 - **Extract** raw order and customer datasets from CSV/Parquet sources.  
