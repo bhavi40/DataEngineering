@@ -39,7 +39,8 @@ Created the following Azure resources within a Resource Group:
 - Final curated data is ready for dashboards and analytical queries.
 ---
 
-## 📂Project Structure
+## 📁 Project Structure
+```text
 📦 Azure-ETL-Pipeline
 │
 ├── CodeForDataIngestion/
@@ -66,4 +67,5 @@ Created the following Azure resources within a Resource Group:
 │   │   - Simplifies automation of the pipeline’s lookup step
 │
 └── README.md
+
 
