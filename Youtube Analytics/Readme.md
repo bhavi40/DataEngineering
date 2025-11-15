@@ -52,8 +52,6 @@ Used the following AWS services:
 ---
 
 ## Installations
-```text
-AWS CLI - ![Guide to Install AWS CLI]https://aws.amazon.com/cli/
 
-```
+AWS CLI - ![Guide to Install AWS CLI]https://aws.amazon.com/cli/
 
