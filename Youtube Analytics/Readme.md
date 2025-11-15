@@ -1,5 +1,5 @@
 # 📊 YouTube Trending Analysis (AWS)
-## Understanding what makes a YouTube video go viral
+Understanding what makes a YouTube video go viral
 
 ## 📌 Project Overview
 This project analyzes YouTube trending video data collected using an end-to-end AWS ETL pipeline.
