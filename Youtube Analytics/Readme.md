@@ -1,4 +1,4 @@
-# 📊 YouTube Trending Analysis (AWS)
+# 🚀 YouTube Trending Data ETL Pipeline (AWS)
 Understanding what makes a YouTube video go viral
 
 ## 📌 Project Overview
@@ -11,15 +11,16 @@ The goal is to identify key factors that influence the popularity of YouTube vid
 ![ETL Architecture Flow](https://github.com/bhavi40/DataEngineering/blob/main/Youtube%20Analytics/AWS%20Data%20Pipeline%20%20Architecture.png)
 
 ## 1. Workflow Steps
-Created the following Azure resources within a Resource Group:
-  - **Azure Data Lake Storage Gen2** - for implementing Medallion layers (Bronze, Silver, Gold)
-  - **Azure Data Factory** - for pipeline orchestration
-  - **Azure Databricks** - for data transformation using PySpark
-  - **Azure Cosmos DB** - for data enrichment
-  - **Azure Synapse Analytics** - for gold-layer reporting
+Used the following AWS services:
+  - **Amazon S3** - Raw & Processed data storage
+  - **AWS Glue Crawler** - Auto-detect files in s3 → catalog tables
+  - **AWS Glue ETL Job** - Transform raw csv files into optimized Parquet
+  - **AWS Glue Catalog** - Metadata storage for Athena
+  - **Amazon Athena** - SQL queries directly on S3
+  - **AWS Step Functions** - Workflow orchestration
 ---
 
-## 2. Data Ingestion (Bronze Layer)
+## 2. DataSet
 - Data sourced from:
    - GitHub – eCommerce dataset (CSV files)
    - Azure SQL – product and sales data
