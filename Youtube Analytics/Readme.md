@@ -10,63 +10,42 @@ The goal is to identify key factors that influence the popularity of YouTube vid
 ## Architecture Flow
 ![ETL Architecture Flow](https://github.com/bhavi40/DataEngineering/blob/main/Youtube%20Analytics/AWS%20Data%20Pipeline%20%20Architecture.png)
 
-## 1. Workflow Steps
+## Workflow Steps
 Used the following AWS services:
+  - **AWS CLI** - To push the raw data to S3
   - **Amazon S3** - Raw & Processed data storage
+  - **AWS Step Functions** - Workflow orchestration
+  - **Amazon Lambda** - clean the Json and convert into parquet
+  - **AWS Glue ETL Job** - Transform raw csv files into optimized parquet
   - **AWS Glue Crawler** - Auto-detect files in s3 → catalog tables
-  - **AWS Glue ETL Job** - Transform raw csv files into optimized Parquet
   - **AWS Glue Catalog** - Metadata storage for Athena
   - **Amazon Athena** - SQL queries directly on S3
-  - **AWS Step Functions** - Workflow orchestration
+  - **AWS Glue ETL Job** - To Join the cleaned csv and Json 
 ---
 
 ## 2. DataSet
-- Data sourced from:
-   - GitHub – eCommerce dataset (CSV files)
-   - Azure SQL – product and sales data
-- Used Azure Data Factory (ADF) pipelines to ingest data from both sources into ADLS Gen2 (Bronze layer).
+- Data is  sourced from kaggle - ![Kaggle Data](https://www.kaggle.com/datasets/datasnaek/youtube-new)
 ---
 
-## 3. Data Transformation (Silver Layer)
-- Transformation done in Azure Databricks using PySpark:
-   - Data cleaning, deduplication, and formatting
-   - Joins and enrichment with data from Azure Cosmos DB
-   - Creation of derived columns
-- Transformed data stored back in ADLS Gen2 → Silver layer
----
-
-## Data Serving (Gold Layer)
-- Connected Azure Synapse Analytics to the ADLS Gen2 Silver layer.
-- Created views and external tables in Synapse for the Gold layer.
-- Final curated data is ready for dashboards and analytical queries.
----
 
 ## 📁 Project Structure
 ```text
-📦 Azure-ETL-Pipeline
+📦 AWS-ETL-Pipeline
 │
-├── CodeForDataIngestion/
-│   ├── [Scripts to send local data to Azure SQL & Cosmos DB]
-│   └── (Acts as data source for ADF pipelines)
+├── S3_cli_command.sh
+│   ├── [Scripts to send local data to s3]
 │
 ├── Data/
-│   ├── [GitHub-based source data files, e.g., ecommerce CSVs]
-│   └── (Raw data for ingestion to ADLS Gen2 Bronze layer)
+│   └── [Kaggle Link]
 │
-├── Databricks_ecommerce.ipynb
-│   ├── PySpark transformation logic:
-│   │   - Cleans and enriches data
-│   │   - Joins with Cosmos DB
-│   │   - Writes to Silver layer in ADLS Gen2
+├── Lambda_function_cleanJson.py
+│   ├── python code to clean JSON and convert into optimized parquet files and store them in s3
 │
-├── ForEachInput.json
-│   ├── ADF helper file for lookup activity:
-│   │   - Used to iterate through multiple input files dynamically
-│   │   - Enables sequential ingestion without manual uploads
+├── ETL JOB-cleansed-csv-to-parquet.py
+│   ├── python code that imports data from data catalog and converts into optimized parquet file
 │
-├── ForEachInputScript.ipynb
-│   ├── Python/Notebook used to generate the `ForEachInput.json` dynamically
-│   │   - Simplifies automation of the pipeline’s lookup step
+├── ETL JOB- joining-csv-json.py
+│   ├── python code that imports csv and json tables from data catalog,  joins them and converts to optimized parquet file
 │
 └── README.md
 
