@@ -48,12 +48,12 @@ Used the following AWS services:
 │   ├── python code that imports csv and json tables from data catalog,  joins them and converts to optimized parquet file
 │
 └── README.md
-
+```
 ---
 
 ## Installations
 ```text
 AWS CLI - ![Guide to Install AWS CLI]https://aws.amazon.com/cli/
 
-
+```
 
