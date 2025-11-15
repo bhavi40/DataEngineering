@@ -49,6 +49,8 @@ Used the following AWS services:
 │
 └── README.md
 
+---
+
 ## Installations
 ```text
 AWS CLI - ![Guide to Install AWS CLI]https://aws.amazon.com/cli/
