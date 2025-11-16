@@ -25,7 +25,9 @@ Used the following AWS services:
 
 ## 2. DataSet
 - Data is  sourced from kaggle - ![Kaggle Data](https://www.kaggle.com/datasets/datasnaek/youtube-new)
----
+
+## Architecture Flow
+![step Flow](https://github.com/bhavi40/DataEngineering/blob/main/Youtube%20Analytics/stepfunctions_graph.png)
 
 
 ## 📁 Project Structure
@@ -38,14 +40,20 @@ Used the following AWS services:
 ├── Data/
 │   └── [Kaggle Link]
 │
-├── Lambda_function_cleanJson.py
+├── lambda_function_Json_to_Parquet.py
 │   ├── python code to clean JSON and convert into optimized parquet files and store them in s3
 │
-├── ETL JOB-cleansed-csv-to-parquet.py
+├── lambda_function_workflow_invoke.py
+│   ├── To invoke state machine
+│
+├── ETL_JOB_cleaned_CSV_to_Parquet.py
 │   ├── python code that imports data from data catalog and converts into optimized parquet file
 │
-├── ETL JOB- joining-csv-json.py
+├── ETL_JOB_Join_Json_CSV.py
 │   ├── python code that imports csv and json tables from data catalog,  joins them and converts to optimized parquet file
+│
+│── de-youtube-data-workflow.asl.json
+│   ├── Json code for step function
 │
 └── README.md
 ```
