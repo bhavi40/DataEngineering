@@ -8,7 +8,7 @@ The goal is to identify key factors that influence the popularity of YouTube vid
 ---
 
 ## Architecture Flow
-![ETL Architecture Flow](https://github.com/bhavi40/DataEngineering/blob/main/Youtube%20Analytics/Architecture.png)
+![ETL Architecture Flow]()
 
 ## Workflow Steps
 Used the following AWS services:
