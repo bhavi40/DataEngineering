@@ -27,7 +27,7 @@ Used the following AWS services:
 - Data is  sourced from kaggle - ![Kaggle Data](https://www.kaggle.com/datasets/datasnaek/youtube-new)
 
 ## State Machine Workflow
-![step Flow]()
+![step Flow](https://github.com/bhavi40/DataEngineering/blob/main/Youtube%20Analytics/stepfunctions_graph.png)
 
 
 ## 📁 Project Structure
