@@ -1,0 +1,65 @@
+{
+  "name": "event job",
+  "email_notifications": {
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 0,
+  "trigger": {
+    "pause_status": "UNPAUSED",
+    "file_arrival": {
+      "url": "s3://wearable-health-pipeline/raw/network_events/",
+      "wait_after_last_change_seconds": 0
+    }
+  },
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "event_pipeline",
+      "run_if": "ALL_SUCCESS",
+      "pipeline_task": {
+        "pipeline_id": "1cf953d9-fbd6-47c8-a138-5a12d8c5d09e",
+        "full_refresh": false
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "log_events_completion_",
+      "depends_on": [
+        {
+          "task_key": "event_pipeline"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/bhavishya.vudatha@ucdenver.edu/log_events",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "check_and_trigger_gold_",
+      "depends_on": [
+        {
+          "task_key": "log_events_completion_"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/bhavishya.vudatha@ucdenver.edu/check_and_trigger_gold",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    }
+  ],
+  "queue": {
+    "enabled": true
+  },
+  "performance_target": "PERFORMANCE_OPTIMIZED"
+}
