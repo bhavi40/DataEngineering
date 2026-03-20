@@ -282,21 +282,6 @@ cp output/raw/network_events/* airflow-telecom/data/raw/network_events/
 
 ---
 
-## Key Design Decisions
-
-**Why decouple CDR and Events pipelines?**
-CDR records every call regardless of quality. Network events only fire on problems — dropped calls, poor signal, tower outages. They arrive at different volumes (80K vs 40K) and potentially at different times. Decoupling lets each process independently and avoids blocking one on the other.
-
-**Why MERGE instead of APPEND for Gold?**
-Gold may run multiple times if late-arriving events trigger it again. MERGE ensures each customer has exactly one row per day — updated with the latest complete data rather than duplicated.
-
-**Why pipeline_run_log instead of a time window?**
-Time windows (e.g. "wait until 11 PM") are brittle — they fail if a pipeline runs late or early. A coordination table makes the dependency explicit: gold runs when both pipelines confirm completion, regardless of clock time.
-
-**Why Autoloader with append_flow?**
-`dp.create_streaming_table()` + `@dp.append_flow` ensures Bronze and Silver tables only ever append — new files are detected via checkpoint, processed exactly once, and never reprocessed. This is more reliable than batch reads which would recompute everything on each run.
-
----
 
 ## Performance
 
@@ -310,15 +295,7 @@ Time windows (e.g. "wait until 11 PM") are brittle — they fail if a pipeline r
 | **Total end-to-end** | **~5 minutes** |
 
 *Tested on Databricks Serverless compute with 80,000 CDR rows + 40,000 event rows.*
+**Note:** Pipeline currently runs on Databricks Serverless compute which incurs a cold start. Actively exploring optimizations to reduce end-to-end latency. Target: under 2 minutes.
 
 ---
 
-## Resume Bullet Points
-
-- Built an end-to-end real-time telecom analytics pipeline on Databricks processing 120,000+ daily records (80K CDR + 40K network events) using Lakeflow Spark Declarative Pipelines with Autoloader and append_flow for incremental ingestion into a medallion architecture (Bronze → Silver → Gold) on AWS S3 and Unity Catalog, enabling customer churn risk analysis and network health monitoring across 5,000 customers
-
-- Engineered a decoupled event-driven orchestration system using Databricks Jobs API, file arrival triggers, and a pipeline coordination table with idempotency flags to synchronize independent CDR and network events pipelines — automatically triggering gold aggregation only when both upstream pipelines completed, completing the full Bronze-to-Gold pipeline in under 5 minutes end-to-end
-
-- Implemented data quality enforcement at the Silver layer using 10 DLT expectations with expect_or_drop and expect constraints to filter invalid records (null durations, negative charges, future dates, invalid customer IDs), applied MERGE operations on the Gold Delta table for idempotent daily aggregations including churn risk scoring, network health scoring, and high-value customer segmentation
-
-- Developed an automated ingestion and archival workflow using Apache Airflow (Docker) to upload 800 daily files (400 CDR CSV + 400 network events JSON) to S3, verify file counts post-upload, and archive processed files to partitioned S3 paths (processed/YYYY/MM/) after Databricks pipeline completion — eliminating manual data movement and simulating a production-grade telecom data ingestion system processing data from 400 regional towers
