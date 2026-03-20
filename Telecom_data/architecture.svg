@@ -1,0 +1,206 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#0f1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Real-Time Telecom Analytics Pipeline</text>
+  <text x="600" y="68" text-anchor="middle" font-size="13" fill="#888">Databricks Lakeflow · Unity Catalog · S3 · Airflow</text>
+
+  <!-- ── SECTION LABELS ── -->
+  <text x="60" y="108" font-size="11" font-weight="600" fill="#555" letter-spacing="1.5">INGESTION</text>
+  <text x="60" y="308" font-size="11" font-weight="600" fill="#555" letter-spacing="1.5">ORCHESTRATION</text>
+  <text x="60" y="488" font-size="11" font-weight="600" fill="#555" letter-spacing="1.5">BRONZE / SILVER (DLT)</text>
+  <text x="60" y="688" font-size="11" font-weight="600" fill="#555" letter-spacing="1.5">GOLD / SERVING</text>
+
+  <!-- ── SECTION DIVIDERS ── -->
+  <line x1="60" y1="112" x2="1140" y2="112" stroke="#222" stroke-width="1"/>
+  <line x1="60" y1="312" x2="1140" y2="312" stroke="#222" stroke-width="1"/>
+  <line x1="60" y1="492" x2="1140" y2="492" stroke="#222" stroke-width="1"/>
+  <line x1="60" y1="692" x2="1140" y2="692" stroke="#222" stroke-width="1"/>
+
+  <!-- ════════════════════════════════════════
+       ROW 1 — INGESTION
+  ════════════════════════════════════════ -->
+
+  <!-- Airflow -->
+  <rect x="60" y="125" width="160" height="64" rx="8" fill="#1e1b3a" stroke="#7c6fc4" stroke-width="1.5"/>
+  <text x="140" y="151" text-anchor="middle" font-size="14" font-weight="600" fill="#c4b5f7">Airflow DAG</text>
+  <text x="140" y="169" text-anchor="middle" font-size="11" fill="#8875cc">Docker · local</text>
+  <text x="140" y="183" text-anchor="middle" font-size="10" fill="#6657aa">400 CDR + 400 Events</text>
+
+  <!-- S3 raw/cdr/ -->
+  <rect x="300" y="125" width="200" height="64" rx="8" fill="#1e2a1b" stroke="#5a9e4a" stroke-width="1.5"/>
+  <text x="400" y="151" text-anchor="middle" font-size="14" font-weight="600" fill="#90d47a">S3 raw/cdr/</text>
+  <text x="400" y="169" text-anchor="middle" font-size="11" fill="#68b055">400 × CSV files</text>
+  <text x="400" y="183" text-anchor="middle" font-size="10" fill="#4e8a3d">200 rows · bad data injected</text>
+
+  <!-- S3 raw/network_events/ -->
+  <rect x="580" y="125" width="240" height="64" rx="8" fill="#1e2a1b" stroke="#5a9e4a" stroke-width="1.5"/>
+  <text x="700" y="151" text-anchor="middle" font-size="14" font-weight="600" fill="#90d47a">S3 raw/network_events/</text>
+  <text x="700" y="169" text-anchor="middle" font-size="11" fill="#68b055">400 × JSON files</text>
+  <text x="700" y="183" text-anchor="middle" font-size="10" fill="#4e8a3d">100 events · 7 event types</text>
+
+  <!-- S3 processed/ (archive) -->
+  <rect x="900" y="125" width="180" height="64" rx="8" fill="#222" stroke="#444" stroke-width="1" stroke-dasharray="5 3"/>
+  <text x="990" y="151" text-anchor="middle" font-size="13" font-weight="600" fill="#666">S3 processed/</text>
+  <text x="990" y="169" text-anchor="middle" font-size="11" fill="#555">YYYY/MM/</text>
+  <text x="990" y="183" text-anchor="middle" font-size="10" fill="#444">archived after upload</text>
+
+  <!-- Airflow → S3 CDR -->
+  <line x1="220" y1="157" x2="298" y2="157" stroke="#7c6fc4" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Airflow → S3 Events -->
+  <path d="M140 189 L140 210 L700 210 L700 191" fill="none" stroke="#7c6fc4" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- S3 CDR → processed (dashed) -->
+  <path d="M500 157 L520 157 L520 100 L990 100 L990 123" fill="none" stroke="#444" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#arr-gray)"/>
+
+  <!-- ════════════════════════════════════════
+       ROW 2 — JOBS
+  ════════════════════════════════════════ -->
+
+  <!-- CDR Job -->
+  <rect x="250" y="325" width="200" height="64" rx="8" fill="#0d2030" stroke="#2a7db5" stroke-width="1.5"/>
+  <text x="350" y="351" text-anchor="middle" font-size="14" font-weight="600" fill="#5bb8f5">CDR Job</text>
+  <text x="350" y="369" text-anchor="middle" font-size="11" fill="#3d94d4">File arrival trigger</text>
+  <text x="350" y="383" text-anchor="middle" font-size="10" fill="#2a6fa0">max concurrent runs: 1</text>
+
+  <!-- Events Job -->
+  <rect x="600" y="325" width="200" height="64" rx="8" fill="#0d2030" stroke="#2a7db5" stroke-width="1.5"/>
+  <text x="700" y="351" text-anchor="middle" font-size="14" font-weight="600" fill="#5bb8f5">Events Job</text>
+  <text x="700" y="369" text-anchor="middle" font-size="11" fill="#3d94d4">File arrival trigger</text>
+  <text x="700" y="383" text-anchor="middle" font-size="10" fill="#2a6fa0">max concurrent runs: 1</text>
+
+  <!-- S3 CDR → CDR Job -->
+  <line x1="380" y1="189" x2="358" y2="323" stroke="#5a9e4a" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- S3 Events → Events Job -->
+  <line x1="690" y1="189" x2="695" y2="323" stroke="#5a9e4a" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- ════════════════════════════════════════
+       ROW 3 — DLT PIPELINES
+  ════════════════════════════════════════ -->
+
+  <!-- Databricks Unity Catalog container -->
+  <rect x="60" y="500" width="1080" height="370" rx="12" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="8 4"/>
+  <text x="600" y="522" text-anchor="middle" font-size="11" fill="#444">Databricks · Unity Catalog · telecom</text>
+
+  <!-- CDR Pipeline -->
+  <rect x="80" y="535" width="260" height="90" rx="8" fill="#0a1f35" stroke="#1a5fa0" stroke-width="1.5"/>
+  <text x="210" y="561" text-anchor="middle" font-size="14" font-weight="600" fill="#4da8e8">cdr_pipeline (DLT)</text>
+  <text x="210" y="579" text-anchor="middle" font-size="11" fill="#3080b8">Autoloader → bronze_cdr</text>
+  <text x="210" y="595" text-anchor="middle" font-size="11" fill="#3080b8">append_flow → silver_cdr</text>
+  <text x="210" y="611" text-anchor="middle" font-size="10" fill="#1f5a8a">76,970 rows after quality checks</text>
+
+  <!-- Events Pipeline -->
+  <rect x="420" y="535" width="280" height="90" rx="8" fill="#0a1f35" stroke="#1a5fa0" stroke-width="1.5"/>
+  <text x="560" y="561" text-anchor="middle" font-size="14" font-weight="600" fill="#4da8e8">events_pipeline (DLT)</text>
+  <text x="560" y="579" text-anchor="middle" font-size="11" fill="#3080b8">Autoloader → bronze_events</text>
+  <text x="560" y="595" text-anchor="middle" font-size="11" fill="#3080b8">append_flow → silver_events</text>
+  <text x="560" y="611" text-anchor="middle" font-size="10" fill="#1f5a8a">40,000 rows · 7 expectations</text>
+
+  <!-- pipeline_run_log -->
+  <rect x="780" y="535" width="300" height="90" rx="8" fill="#1a1a0d" stroke="#7a7a20" stroke-width="1.5"/>
+  <text x="930" y="561" text-anchor="middle" font-size="14" font-weight="600" fill="#d4d45a">pipeline_run_log</text>
+  <text x="930" y="579" text-anchor="middle" font-size="11" fill="#aaaa40">pipeline · run_date</text>
+  <text x="930" y="595" text-anchor="middle" font-size="11" fill="#aaaa40">is_processed (0 → 1)</text>
+  <text x="930" y="611" text-anchor="middle" font-size="10" fill="#888820">coordination table</text>
+
+  <!-- log_cdr_completion -->
+  <rect x="80" y="650" width="260" height="44" rx="8" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="210" y="670" text-anchor="middle" font-size="13" font-weight="600" fill="#ccc">log_cdr_completion</text>
+  <text x="210" y="686" text-anchor="middle" font-size="10" fill="#777">INSERT pipeline_run_log is_processed=0</text>
+
+  <!-- log_events_completion -->
+  <rect x="420" y="650" width="280" height="44" rx="8" fill="#1a1a1a" stroke="#555" stroke-width="1"/>
+  <text x="560" y="670" text-anchor="middle" font-size="13" font-weight="600" fill="#ccc">log_events_completion</text>
+  <text x="560" y="686" text-anchor="middle" font-size="10" fill="#777">INSERT pipeline_run_log is_processed=0</text>
+
+  <!-- check_and_trigger_gold -->
+  <rect x="300" y="720" width="480" height="56" rx="8" fill="#1f0e0e" stroke="#c04040" stroke-width="1.5"/>
+  <text x="540" y="746" text-anchor="middle" font-size="14" font-weight="600" fill="#f07070">check_and_trigger_gold</text>
+  <text x="540" y="764" text-anchor="middle" font-size="11" fill="#b05050">Both CDR + Events logged + is_processed=0 → trigger Gold Job API</text>
+
+  <!-- CDR Job → CDR Pipeline -->
+  <line x1="320" y1="389" x2="240" y2="533" stroke="#2a7db5" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Events Job → Events Pipeline -->
+  <line x1="680" y1="389" x2="600" y2="533" stroke="#2a7db5" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- CDR Pipeline → log_cdr -->
+  <line x1="210" y1="625" x2="210" y2="648" stroke="#4da8e8" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Events Pipeline → log_events -->
+  <line x1="560" y1="625" x2="560" y2="648" stroke="#4da8e8" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- log_cdr → check -->
+  <path d="M210 694 L210 710 L298 710 L298 718" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- log_events → check -->
+  <path d="M560 694 L560 710 L542 710 L542 718" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <!-- log tables → pipeline_run_log -->
+  <path d="M340 672 L700 672 L700 610 L778 580" fill="none" stroke="#7a7a20" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#arr-yellow)"/>
+
+  <!-- ════════════════════════════════════════
+       ROW 4 — GOLD / SERVING
+  ════════════════════════════════════════ -->
+
+  <!-- Gold Job -->
+  <rect x="200" y="800" width="300" height="70" rx="8" fill="#0d2010" stroke="#3a9040" stroke-width="2"/>
+  <text x="350" y="826" text-anchor="middle" font-size="15" font-weight="700" fill="#60d060">Gold Job (notebook)</text>
+  <text x="350" y="844" text-anchor="middle" font-size="11" fill="#48a848">MERGE silver_cdr + silver_events</text>
+  <text x="350" y="860" text-anchor="middle" font-size="10" fill="#308030">gold_customer_telecom · 5,000 rows/day</text>
+
+  <!-- SQL Warehouse -->
+  <rect x="620" y="800" width="240" height="70" rx="8" fill="#1a0d30" stroke="#8060d0" stroke-width="1.5"/>
+  <text x="740" y="826" text-anchor="middle" font-size="14" font-weight="600" fill="#b090f0">SQL Warehouse</text>
+  <text x="740" y="844" text-anchor="middle" font-size="11" fill="#8060c0">Dashboards · BI tools</text>
+  <text x="740" y="860" text-anchor="middle" font-size="10" fill="#604898">churn_risk · network_health</text>
+
+  <!-- check → Gold Job -->
+  <line x1="540" y1="776" x2="430" y2="798" stroke="#c04040" stroke-width="1.5" marker-end="url(#arr-red)"/>
+
+  <!-- Gold Job → SQL Warehouse -->
+  <line x1="500" y1="835" x2="618" y2="835" stroke="#3a9040" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <!-- Gold Job → pipeline_run_log (update is_processed=1) -->
+  <path d="M350 800 L350 788 L1080 788 L1080 627" fill="none" stroke="#7a7a20" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#arr-yellow)"/>
+  <text x="900" y="783" text-anchor="middle" font-size="10" fill="#7a7a20">is_processed = 1</text>
+
+  <!-- ── ARROW MARKERS ── -->
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2a7db5" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#5a9e4a" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#c04040" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+    <marker id="arr-yellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#7a7a20" stroke-width="1.5" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <!-- ── LEGEND ── -->
+  <rect x="900" y="800" width="240" height="70" rx="8" fill="#111" stroke="#333" stroke-width="1"/>
+  <text x="1020" y="820" text-anchor="middle" font-size="11" font-weight="600" fill="#666">LEGEND</text>
+  <rect x="918" y="830" width="12" height="10" rx="2" fill="#0a1f35" stroke="#1a5fa0" stroke-width="1.5"/>
+  <text x="936" y="840" font-size="10" fill="#555">DLT streaming table</text>
+  <rect x="918" y="848" width="12" height="10" rx="2" fill="#0d2010" stroke="#3a9040" stroke-width="1.5"/>
+  <text x="936" y="858" font-size="10" fill="#555">Delta table (regular)</text>
+  <rect x="1060" y="830" width="12" height="10" rx="2" fill="#1a1a0d" stroke="#7a7a20" stroke-width="1.5"/>
+  <text x="1078" y="840" font-size="10" fill="#555">Coordination</text>
+  <line x1="1060" y1="855" x2="1072" y2="855" stroke="#444" stroke-width="1" stroke-dasharray="4 2"/>
+  <text x="1078" y="859" font-size="10" fill="#555">Archive / audit</text>
+
+</svg>
